@@ -1,4 +1,4 @@
-import { FaEnvelope, FaGithub, FaLinkedin, FaPhone, FaMapMarkerAlt, FaTwitter } from "react-icons/fa";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import { useState } from "react";
 
 const Contact = () => {
@@ -16,51 +16,9 @@ const Contact = () => {
     setFormData({ name: "", email: "", message: "" }); // Reset form
   };
 
-  const contactOptions = [
-    {
-      icon: <FaEnvelope size={24} />,
-      title: "Email",
-      description: "send me an email",
-      link: "mailto:",
-    },
-    {
-      icon: <FaGithub size={24} />,
-      title: "Github",
-      description: "Follow me on Github",
-      link: "https://github.com/alziputra",
-    },
-    {
-      icon: <FaLinkedin size={24} />,
-      title: "LinkedIn",
-      description: "Connect with me on LinkedIn",
-      link: "https://www.linkedin.com/in/alzirahmana/",
-    },
-    {
-      icon: <FaTwitter size={24} />,
-      title: "Twitter",
-      description: "Connect with me on Twitter",
-      link: "https://twitter.com/yourusername",
-    },
-  ];
-
   return (
     <div className="container mx-auto p-8">
-      <h2 className="text-3xl font-semibold mb-4 text-center text-gray-800">Contact Me</h2>
-      <p className="mb-8 text-center text-gray-600 max-w-lg mx-auto">Trust me, having a contact form is not always a good idea. You can connect with me any way you prefer.</p>
-
-      {/* Contact Information */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
-        {contactOptions.map((option, index) => (
-          <div key={index} className="text-center bg-gray-100 p-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 transform hover:scale-105">
-            <a href={option.link} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center space-y-2">
-              <div className="text-blue-500">{option.icon}</div>
-              <h3 className="text-lg font-semibold text-gray-800">{option.title}</h3>
-              <p className="text-gray-600">{option.description}</p>
-            </a>
-          </div>
-        ))}
-      </div>
-
+      <h2 className="text-3xl font-semibold mb-8 text-center text-gray-800">Contact Me</h2>
       <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Contact Information Section */}
         <div className="lg:col-span-1 bg-gray-100 p-4 rounded-lg shadow-md">

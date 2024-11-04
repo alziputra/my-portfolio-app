@@ -21,7 +21,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="lg:flex lg:flex-col lg:h-screen p-4 bg-gray-800 text-white w-full lg:w-64">
+    <div className="lg:flex lg:flex-col lg:h-screen px-4 py-8 bg-gray-800 text-white w-full lg:w-64">
       {/* Profile Component */}
       <Profile name="Alzi Rahmana Putra" bio="Web Developer Enthusiast | Backend Developer" imageUrl="https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png" />
 
