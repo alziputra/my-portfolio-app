@@ -14,17 +14,31 @@ const BlogDetail = () => {
 
   return (
     <div className="container mx-auto p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {/* Blog Content */}
+      {/* Main Blog Content */}
       <div className="lg:col-span-2">
-        <img src={blogContent.image} alt={blogContent.title} className="w-full h-72 object-cover rounded-md mb-4" />
-        <p className="text-sm text-gray-500 mb-2">{blogContent.date}</p>
-        <h2 className="text-2xl font-semibold mb-4">{blogContent.title}</h2>
-        <p className="text-gray-700">{blogContent.content}</p>
+        <h1 className="text-3xl font-bold mb-4">{blogContent.title}</h1>
+        <div className="flex items-center mb-6">
+          <img src={blogContent.author.profileImage} alt={blogContent.author.name} className="w-12 h-12 rounded-full mr-4" />
+          <div>
+            <p className="text-lg font-semibold">{blogContent.author.name}</p>
+            <p className="text-gray-500 text-sm">{blogContent.author.profleTitle}</p>
+          </div>
+        </div>
+        <img src={blogContent.image} alt={blogContent.title} className="w-full h-64 object-cover rounded-lg mb-6" />
+        <div className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: blogContent.content }}></div>
+        <div className="text-gray-500 text-sm mt-6">
+          Created: {blogContent.createdAt} | Updated: {blogContent.updatedAt}
+        </div>
+        <div className="flex justify-between text-gray-600 text-sm mt-4">
+          <span>👁 {blogContent.stats.views} views</span>
+          <span>❤️ {blogContent.stats.likes} likes</span>
+          <span>💬 {blogContent.stats.comments} comments</span>
+        </div>
       </div>
 
       {/* Navigation Section */}
-      <div className="lg:col-span-1 bg-gray-100 p-6 rounded-lg shadow-md">
-        <h3 className="text-lg font-semibold mb-4">Blog Lainnya</h3>
+      <div className="bg-gray-100 p-6 rounded-lg shadow-md">
+        <h3 className="text-lg font-semibold mb-4">Other Blog Posts</h3>
         <ul className="space-y-2">
           {blogItems.map((blog) => (
             <li key={blog.id} className={`cursor-pointer ${blog.id === parseInt(id) ? "text-blue-500 font-semibold" : "text-gray-700"}`}>

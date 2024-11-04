@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 
-const PortfolioCard = ({ image, title, date, description, technologies, demoLink, githubLink }) => {
+const PortfolioCard = ({ image, title, createdAt, description, technologies, demoLink, githubLink }) => {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 transition-all transform hover:scale-105 hover:shadow-2xl cursor-pointer max-w-md">
+    <div className="bg-white rounded-lg shadow-lg p-6 transition-all transform hover:scale-105 hover:shadow-2xl max-w-md">
       <img src={image} alt={title} className="w-full h-56 object-cover rounded-t-md mb-4" />
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
-        <span className="text-sm text-gray-500">{date}</span>
+        <span className="text-sm text-gray-500">{createdAt}</span>
       </div>
       <p className="text-gray-700 mb-4 leading-relaxed">{description}</p>
       <div className="flex flex-wrap gap-2 mb-4">
@@ -42,7 +42,7 @@ const PortfolioCard = ({ image, title, date, description, technologies, demoLink
 
 PortfolioCard.propTypes = {
   image: PropTypes.string.isRequired,
-  date: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   technologies: PropTypes.arrayOf(PropTypes.string).isRequired,

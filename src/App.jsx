@@ -5,6 +5,7 @@ import Portfolio from "./pages/Portfolio";
 import Blogs from "./pages/Blogs";
 import BlogDetail from "./pages/BlogDetail";
 import Contact from "./pages/Contact";
+import PostCreator from "./components/PostCreator";
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/post" element={<PostCreator />} />
         </Routes>
       </MainLayout>
     </Router>

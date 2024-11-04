@@ -1,60 +1,109 @@
 const blogItems = [
   {
     id: 1,
-    image: "https://cdn.pixabay.com/photo/2015/04/23/17/41/javascript-736400_1280.png",
-    title: "JavaScript: Dasar-Dasar",
+    author: {
+      name: "John Doe",
+      profileImage: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
+      profleTitle: "Web Developer Enthusiast | Backend Developer",
+    },
+    title: "Mengapa JavaScript Tetap Populer di Dunia Pengembangan Web",
+    image: "https://cdn.pixabay.com/photo/2023/07/19/12/40/trees-8136806_640.png",
     content: `
-    JavaScript adalah bahasa pemrograman yang digunakan untuk membuat situs web lebih interaktif. Bahasa ini awalnya dikembangkan oleh Netscape pada tahun 1995 dan kini menjadi salah satu bahasa yang paling populer di dunia pengembangan web. JavaScript digunakan di sisi klien (front-end) dan juga dapat digunakan di sisi server (back-end) dengan bantuan Node.js. Berikut adalah dasar-dasar JavaScript yang perlu dipahami:
-    
-    1. Menulis Kode JavaScript - Kode JavaScript dapat ditulis langsung di HTML menggunakan tag <script>.
-    2. Variabel - Variabel adalah cara untuk menyimpan data dalam JavaScript. Ada tiga kata kunci yang bisa digunakan untuk mendeklarasikan variabel: var, let, dan const.
-    3. Tipe Data - JavaScript memiliki beberapa tipe data dasar: String, Number, Boolean, Object, Array, Undefined, dan Null.
-    4. Operator - Operator digunakan untuk melakukan operasi pada variabel atau nilai. Beberapa operator umum dalam JavaScript meliputi aritmatika, perbandingan, dan logika.
-    5. Kondisional - JavaScript menggunakan pernyataan kondisional untuk membuat keputusan berdasarkan kondisi tertentu.
-    6. Loop - Loop digunakan untuk menjalankan blok kode berulang kali.
-    7. Fungsi - Fungsi adalah blok kode yang dapat digunakan kembali dan menjalankan tugas tertentu.
-    8. DOM Manipulation - JavaScript dapat digunakan untuk memanipulasi Document Object Model (DOM).
-    9. Event Handling - Event handling memungkinkan JavaScript bereaksi terhadap interaksi pengguna.
-    
-    JavaScript adalah bahasa pemrograman yang sangat fleksibel dan kaya fitur. Menguasai dasar-dasar ini adalah langkah awal untuk membuat situs web interaktif dan dinamis. Selanjutnya, Anda dapat mendalami lebih lanjut tentang topik lanjutan seperti async/await, API, dan framework JavaScript seperti React atau Vue. Semoga panduan ini membantu Anda memahami dasar-dasar JavaScript!
+      JavaScript telah menjadi bahasa dominan dalam pengembangan web selama bertahun-tahun. 
+      Dalam artikel ini, kita akan mengulas alasan-alasan utama mengapa JavaScript tetap populer 
+      meskipun banyak bahasa baru bermunculan.
+      
+      Pertama, JavaScript adalah bahasa pemrograman yang berjalan di browser secara native, yang 
+      membuatnya sangat fleksibel. Selain itu, ekosistem JavaScript yang kaya seperti Node.js, 
+      React, dan Vue memperluas kegunaannya di berbagai aspek pengembangan, mulai dari server-side 
+      hingga aplikasi mobile.
+      
+      Tidak hanya itu, komunitas yang besar dan dokumentasi yang banyak tersedia juga memudahkan 
+      pemula untuk belajar dan ahli untuk terus mengembangkan skill mereka.
+      
+      <h3>Manfaat Menggunakan JavaScript</h3>
+      - Fleksibel dan mudah diadopsi.<br>
+      - Kompatibilitas lintas platform.<br>
+      - Memiliki banyak framework dan library yang mendukung.<br>
+      
+      JavaScript adalah bahasa yang fleksibel dan kaya fitur, membuatnya tetap relevan di dunia 
+      teknologi yang terus berubah. Jika Anda belum mulai mempelajari JavaScript, mungkin sekarang 
+      adalah saat yang tepat!
     `,
-    createdAt: "10 Oktober 2023",
-    updateAt: "15 Oktober 2023",
+    createdAt: "2 Oktober 2023",
+    updatedAt: "5 Oktober 2023",
+    stats: {
+      views: 1250,
+      likes: 300,
+      comments: 45,
+    },
   },
   {
     id: 2,
-    image: "https://cdn.pixabay.com/photo/2019/02/18/19/59/graphic-4005286_640.png",
-    title: "React untuk Pemula: Memahami Komponen dan State",
-    content:
-      "Pelajari dasar-dasar membangun antarmuka pengguna dengan React. Artikel ini membahas apa itu komponen, cara menggunakan props untuk komunikasi antar komponen, serta bagaimana mengelola state dalam aplikasi. Sangat berguna bagi yang baru mulai dengan React.",
-    createdAt: "15 November 2023",
-    updateAt: "20 November 2023",
+    author: {
+      name: "John Doe",
+      profileImage: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
+      profleTitle: "Web Developer Enthusiast | Backend Developer",
+    },
+    title: "Strategi Sukses dalam Mengelola Tim Remote",
+    image: "https://cdn.pixabay.com/photo/2024/10/20/11/07/ai-generated-9134709_640.jpg",
+    content: `
+      Dengan semakin populernya bekerja jarak jauh, manajemen tim remote menjadi keterampilan yang 
+      sangat penting. Di artikel ini, saya akan membagikan beberapa strategi yang dapat membantu 
+      Anda mengelola tim remote secara efektif.
+      
+      <h3>Komunikasi yang Konsisten</h3>
+      Pertahankan komunikasi yang terbuka dan konsisten. Menggunakan alat seperti Slack atau Teams 
+      dapat membantu anggota tim merasa tetap terhubung dan termotivasi.
+      
+      <h3>Fleksibilitas dan Kepercayaan</h3>
+      Memberikan fleksibilitas dalam jam kerja dapat meningkatkan produktivitas. Kepercayaan adalah 
+      dasar dalam mengelola tim remote.
+      
+      Dengan mengikuti langkah-langkah ini, Anda dapat membangun tim remote yang produktif dan 
+      termotivasi, tanpa harus bertemu langsung setiap hari.
+    `,
+    createdAt: "12 November 2023",
+    updatedAt: "15 November 2023",
+    stats: {
+      views: 850,
+      likes: 200,
+      comments: 30,
+    },
   },
   {
     id: 3,
-    image: "https://via.placeholder.com/600",
-    title: "Menguasai MySQL: Manajemen Database dan Optimasi Query",
-    content:
-      "MySQL adalah salah satu sistem manajemen basis data yang paling populer. Artikel ini mengulas cara menjalankan perintah-perintah dasar MySQL, tips untuk mengoptimalkan performa query, serta praktik terbaik dalam manajemen database yang efisien.",
-    createdAt: "20 Desember 2023",
-    updateAt: "25 Desember 2023",
-  },
-  {
-    id: 4,
-    image: "https://via.placeholder.com/600",
-    title: "Menggunakan Sequelize ORM dengan Node.js dan MySQL",
-    content:
-      "Panduan ini menjelaskan cara menggunakan Sequelize ORM dalam proyek Node.js untuk berinteraksi dengan MySQL. Mulai dari mendefinisikan model, menjalankan migrasi, hingga melakukan operasi CRUD di database secara efisien dan mudah.",
-    createdAt: "10 Januari 2024",
-    updateAt: "15 Januari 2024",
-  },
-  {
-    id: 5,
-    image: "https://via.placeholder.com/600",
-    title: "JavaScript Lanjutan: Closures, Promises, dan Async/Await",
-    content: "Dalam artikel ini, kita mendalami fitur-fitur JavaScript tingkat lanjut seperti closures, promises untuk manajemen asynchronous, serta async/await untuk penulisan kode asynchronous yang lebih sederhana dan mudah dibaca.",
-    createdAt: "5 Februari 2024",
-    updateAt: "20 Februari 2024",
+    author: {
+      name: "John Doe",
+      profileImage: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
+      profleTitle: "Web Developer Enthusiast | Backend Developer",
+    },
+    title: "Tips Efektif dalam Meningkatkan Engagement di Media Sosial",
+    image: "https://cdn.pixabay.com/photo/2018/03/22/02/37/email-3249062_640.png",
+    content: `
+      Engagement di media sosial menjadi salah satu metrik utama dalam pemasaran digital. Bagaimana 
+      cara meningkatkan engagement di platform seperti Instagram, Facebook, dan LinkedIn? Berikut 
+      adalah beberapa tips yang bisa Anda coba.
+      
+      <h3>1. Buat Konten yang Relevan</h3>
+      Pastikan konten yang Anda buat relevan dan menarik bagi audiens Anda.
+      
+      <h3>2. Gunakan Hashtag yang Tepat</h3>
+      Hashtag dapat membantu konten Anda ditemukan oleh lebih banyak orang yang memiliki minat yang sama.
+      
+      <h3>3. Aktif Berinteraksi</h3>
+      Menanggapi komentar atau pesan dengan cepat menunjukkan bahwa Anda peduli dengan audiens Anda.
+      
+      Dengan menerapkan tips-tips ini, Anda dapat meningkatkan interaksi dengan audiens Anda dan 
+      memperkuat kehadiran online Anda.
+    `,
+    createdAt: "25 November 2023",
+    updatedAt: "28 November 2023",
+    stats: {
+      views: 650,
+      likes: 180,
+      comments: 22,
+    },
   },
 ];
 
