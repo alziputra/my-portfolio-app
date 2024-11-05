@@ -1,17 +1,26 @@
 import PropTypes from "prop-types";
 
-const Card = ({ title, children }) => {
+const Card = ({ title, content }) => {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">{title}</h2>
-      <div className="text-gray-600 leading-relaxed">{children}</div>
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-xl font-bold mb-4">{title}</h2>
+      {Array.isArray(content) ? (
+        <div className="list-disc list-inside">
+          {content.map((item, index) => (
+            <p key={index}>{item}</p>
+          ))}
+        </div>
+      ) : (
+        <p>{content}</p>
+      )}
     </div>
   );
 };
 
+// Define PropTypes outside the component function
 Card.propTypes = {
   title: PropTypes.string.isRequired,
-  children: PropTypes.node.isRequired,
+  content: PropTypes.oneOfType([PropTypes.string, PropTypes.arrayOf(PropTypes.string)]).isRequired,
 };
 
 export default Card;

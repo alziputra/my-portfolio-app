@@ -21,19 +21,14 @@ const BlogDetail = () => {
           <img src={blogContent.author.profileImage} alt={blogContent.author.name} className="w-12 h-12 rounded-full mr-4" />
           <div>
             <p className="text-lg font-semibold">{blogContent.author.name}</p>
-            <p className="text-gray-500 text-sm">{blogContent.author.profleTitle}</p>
+            <p className="text-gray-500 text-sm">
+              Created: {blogContent.createdAt} | Updated: {blogContent.updatedAt}
+            </p>
           </div>
         </div>
         <img src={blogContent.image} alt={blogContent.title} className="w-full h-64 object-cover rounded-lg mb-6" />
         <div className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: blogContent.content }}></div>
-        <div className="text-gray-500 text-sm mt-6">
-          Created: {blogContent.createdAt} | Updated: {blogContent.updatedAt}
-        </div>
-        <div className="flex justify-between text-gray-600 text-sm mt-4">
-          <span>👁 {blogContent.stats.views} views</span>
-          <span>❤️ {blogContent.stats.likes} likes</span>
-          <span>💬 {blogContent.stats.comments} comments</span>
-        </div>
+        
       </div>
 
       {/* Navigation Section */}

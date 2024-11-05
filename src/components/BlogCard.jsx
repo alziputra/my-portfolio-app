@@ -24,9 +24,9 @@ const BlogCard = ({ id, image, createdAt, title, content }) => {
 BlogCard.propTypes = {
   id: PropTypes.number.isRequired,
   image: PropTypes.string.isRequired,
-  createdAt: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
 };
 
 export default BlogCard;

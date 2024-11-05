@@ -2,7 +2,7 @@ const blogItems = [
   {
     id: 1,
     author: {
-      name: "John Doe",
+      name: "Alzi Rahmana Putra",
       profileImage: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
       profleTitle: "Web Developer Enthusiast | Backend Developer",
     },
@@ -32,16 +32,11 @@ const blogItems = [
     `,
     createdAt: "2 Oktober 2023",
     updatedAt: "5 Oktober 2023",
-    stats: {
-      views: 1250,
-      likes: 300,
-      comments: 45,
-    },
   },
   {
     id: 2,
     author: {
-      name: "John Doe",
+      name: "Alzi Rahmana Putra",
       profileImage: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
       profleTitle: "Web Developer Enthusiast | Backend Developer",
     },
@@ -65,16 +60,11 @@ const blogItems = [
     `,
     createdAt: "12 November 2023",
     updatedAt: "15 November 2023",
-    stats: {
-      views: 850,
-      likes: 200,
-      comments: 30,
-    },
   },
   {
     id: 3,
     author: {
-      name: "John Doe",
+      name: "Alzi Rahmana Putra",
       profileImage: "https://cdn.pixabay.com/photo/2021/09/20/03/24/skeleton-6639547_1280.png",
       profleTitle: "Web Developer Enthusiast | Backend Developer",
     },
@@ -99,11 +89,6 @@ const blogItems = [
     `,
     createdAt: "25 November 2023",
     updatedAt: "28 November 2023",
-    stats: {
-      views: 650,
-      likes: 180,
-      comments: 22,
-    },
   },
 ];
 
