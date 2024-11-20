@@ -6,28 +6,38 @@ const AddBlogForm = ({ onClose }) => {
   const { addBlog } = useBlogContext();
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
-  const [newImage, setNewImage] = useState("");
+  const [newImage, setNewImage] = useState(null); // Menyimpan file gambar
+  const [isUploading, setIsUploading] = useState(false);
 
   const handleAddBlog = async (e) => {
     e.preventDefault();
+
     if (!newTitle || !newContent || !newImage) {
-      alert("Please fill out all fields!");
+      alert("Please fill out all fields and upload an image!");
       return;
     }
 
-    await addBlog({
-      title: newTitle,
-      content: newContent,
-      image: newImage,
-      createdAt: new Date().toISOString(),
-    });
+    try {
+      setIsUploading(true);
+      await addBlog(
+        {
+          title: newTitle,
+          content: newContent,
+        },
+        newImage // File gambar
+      );
 
-    // Reset form dan tutup form
-    setNewTitle("");
-    setNewContent("");
-    setNewImage("");
-    onClose();
-    alert("Blog added successfully!");
+      setNewTitle("");
+      setNewContent("");
+      setNewImage(null);
+      onClose();
+      alert("Blog added successfully!");
+    } catch (error) {
+      console.error("Error adding blog:", error);
+      alert("Failed to add blog. Please try again.");
+    } finally {
+      setIsUploading(false);
+    }
   };
 
   return (
@@ -41,11 +51,11 @@ const AddBlogForm = ({ onClose }) => {
         <textarea value={newContent} onChange={(e) => setNewContent(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg" rows="4" placeholder="Enter blog content"></textarea>
       </div>
       <div>
-        <label className="block text-gray-700 font-medium mb-2">Image URL</label>
-        <input type="text" value={newImage} onChange={(e) => setNewImage(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Enter image URL" />
+        <label className="block text-gray-700 font-medium mb-2">Image</label>
+        <input type="file" onChange={(e) => setNewImage(e.target.files[0])} className="w-full p-2 border border-gray-300 rounded-lg" />
       </div>
-      <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-        Save Blog
+      <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" disabled={isUploading}>
+        {isUploading ? "Uploading..." : "Save Blog"}
       </button>
     </form>
   );
