@@ -1,5 +1,5 @@
-import PortfolioCard from "../components/PortfolioCard";
-import portfolioItems from "../data/portfolioItems";
+import PortfolioCard from "../../components/PortfolioCard";
+import portfolioItems from "../../data/portfolioItems";
 
 const Portfolio = () => {
   return (

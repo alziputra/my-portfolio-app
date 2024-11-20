@@ -22,7 +22,7 @@ const BlogCard = ({ id, image, createdAt, title, content }) => {
 };
 
 BlogCard.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired, // Ubah tipe dari number menjadi string
   image: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
