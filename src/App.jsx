@@ -6,6 +6,8 @@ import Blogs from "./pages/Blogs/Blogs";
 import BlogDetail from "./pages/Blogs/BlogDetail";
 import Contact from "./pages/Contact";
 import PostCreator from "./components/PostCreator";
+import { ToastContainer } from "react-toastify"; // Import ToastContainer
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify styles
 
 const App = () => {
   return (
@@ -21,6 +23,9 @@ const App = () => {
           <Route path="/post" element={<PostCreator />} />
         </Routes>
       </MainLayout>
+
+      {/* ToastContainer to display toast notifications */}
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar />
     </Router>
   );
 };

@@ -15,6 +15,7 @@ const Blogs = () => {
   // Fungsi untuk mengedit blog
   const handleEditBlog = (blog) => {
     setEditingBlog(blog);
+    setIsAdding(false); // Sembunyikan form Add jika sedang edit
   };
 
   return (
@@ -40,19 +41,13 @@ const Blogs = () => {
       {editingBlog && <EditBlogForm blog={editingBlog} onClose={() => setEditingBlog(null)} />}
 
       {/* Daftar Blog */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {blogs.map((blog) => (
-          <BlogCard
-            key={blog.id}
-            id={blog.id}
-            image={blog.image}
-            title={blog.title}
-            content={blog.content}
-            createdAt={new Date(blog.createdAt).toLocaleDateString()}
-            onEdit={() => handleEditBlog(blog)} // Tambahkan tombol Edit
-          />
-        ))}
-      </div>
+      {!isAdding && !editingBlog && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {blogs.map((blog) => (
+            <BlogCard key={blog.id} id={blog.id} image={blog.image} title={blog.title} content={blog.content} createdAt={new Date(blog.createdAt).toLocaleDateString()} onEdit={() => handleEditBlog(blog)} />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useBlogContext } from "../../context/BlogContext";
 import PropTypes from "prop-types";
+import { toast } from "react-toastify";
 
 const AddBlogForm = ({ onClose }) => {
   const { addBlog } = useBlogContext();
@@ -13,7 +14,7 @@ const AddBlogForm = ({ onClose }) => {
     e.preventDefault();
 
     if (!newTitle || !newContent || !newImage) {
-      alert("Please fill out all fields and upload an image!");
+      toast.error("Please fill out all fields and upload an image!");
       return;
     }
 
@@ -31,10 +32,10 @@ const AddBlogForm = ({ onClose }) => {
       setNewContent("");
       setNewImage(null);
       onClose();
-      alert("Blog added successfully!");
+      toast.success("Blog added successfully!");
     } catch (error) {
       console.error("Error adding blog:", error);
-      alert("Failed to add blog. Please try again.");
+      toast.error("Failed to add blog. Please try again.");
     } finally {
       setIsUploading(false);
     }

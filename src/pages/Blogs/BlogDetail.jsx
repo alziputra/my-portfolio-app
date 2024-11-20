@@ -2,6 +2,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { BlogContext } from "../../context/BlogContext";
+import { formatRelativeTime } from "../../utils/formatTime";
 
 const BlogDetail = () => {
   const { id } = useParams();
@@ -58,9 +59,7 @@ const BlogDetail = () => {
               <img src={formData?.author?.profileImage} alt={formData?.author?.name} className="w-12 h-12 rounded-full mr-4" />
               <div>
                 <p className="text-lg font-semibold">{formData?.author?.name}</p>
-                <p className="text-gray-500 text-sm">
-                  Created: {formData?.createdAt} | Updated: {formData?.updatedAt}
-                </p>
+                <p className="text-gray-600">{formatRelativeTime(formData?.createdAt)}</p>
               </div>
             </div>
             <img src={formData?.image} alt={formData?.title} className="w-full h-64 object-cover rounded-lg mb-6" />

@@ -4,6 +4,7 @@ import { ref, onValue, update, remove, push, set } from "firebase/database";
 import { database } from "../config/firebase";
 import cloudinaryUpload from "../config/cloudUpload";
 import { BlogContext } from "../context/BlogContext";
+import { toast } from "react-toastify";
 
 const BlogProvider = ({ children }) => {
   const [blogs, setBlogs] = useState([]);
@@ -19,13 +20,12 @@ const BlogProvider = ({ children }) => {
       (snapshot) => {
         const data = snapshot.val();
         const blogArray = data ? Object.keys(data).map((key) => ({ id: key, ...data[key] })) : [];
-        console.log("Fetched blogs:", blogArray); // Debugging
         setBlogs(blogArray);
         setLoading(false);
       },
       (firebaseError) => {
-        console.error("Error fetching blogs:", firebaseError.message);
         setError(firebaseError.message);
+        toast.error("Error fetching blogs: " + firebaseError.message);
         setLoading(false);
       }
     );
@@ -39,44 +39,46 @@ const BlogProvider = ({ children }) => {
       let imageUrl = "";
 
       if (file) {
-        imageUrl = await cloudinaryUpload(file); // Upload gambar ke Cloudinary
+        imageUrl = await cloudinaryUpload(file);
       }
 
       const blogRef = ref(database, "blogs");
-      const newBlogRef = push(blogRef); // Create a new unique ID
+      const newBlogRef = push(blogRef);
       const blogData = {
         ...newBlog,
-        image: imageUrl, // Tambahkan URL gambar
+        image: imageUrl,
         createdAt: new Date().toISOString(),
       };
-      console.log("Saving blog to Firebase:", blogData); // Debugging
+
       await set(newBlogRef, blogData);
+      toast.success("Blog added successfully!");
     } catch (firebaseError) {
       setError(firebaseError.message);
-      console.error("Error adding blog:", firebaseError.message);
+      toast.error("Error adding blog: " + firebaseError.message);
     }
   };
 
   // Update an existing blog
   const updateBlog = async (id, updatedData, file) => {
     try {
-      let imageUrl = updatedData.image || ""; // Gunakan URL lama jika tidak ada gambar baru
+      let imageUrl = updatedData.image || "";
 
       if (file) {
-        imageUrl = await cloudinaryUpload(file); // Upload gambar baru ke Cloudinary
+        imageUrl = await cloudinaryUpload(file);
       }
 
       const blogRef = ref(database, `blogs/${id}`);
       const blogData = {
         ...updatedData,
-        image: imageUrl, // Update dengan URL gambar baru
+        image: imageUrl,
         updatedAt: new Date().toISOString(),
       };
-      console.log("Updating blog in Firebase:", blogData); // Debugging
+
       await update(blogRef, blogData);
+      toast.success("Blog updated successfully!");
     } catch (firebaseError) {
       setError(firebaseError.message);
-      console.error("Error updating blog:", firebaseError.message);
+      toast.error("Error updating blog: " + firebaseError.message);
     }
   };
 
@@ -85,9 +87,10 @@ const BlogProvider = ({ children }) => {
     try {
       const blogRef = ref(database, `blogs/${id}`);
       await remove(blogRef);
+      toast.success("Blog deleted successfully!");
     } catch (firebaseError) {
       setError(firebaseError.message);
-      console.error("Error deleting blog:", firebaseError.message);
+      toast.error("Error deleting blog: " + firebaseError.message);
     }
   };
 
