@@ -14,7 +14,7 @@ const BlogCard = ({ id, image, createdAt, title, content, onDelete }) => {
   const truncateText = (text, maxLength = 100) => (text.length > maxLength ? `${text.slice(0, maxLength)}...` : text);
 
   return (
-    <div onClick={handleCardClick} className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 cursor-pointer w-full relative">
+    <div onClick={handleCardClick} className="bg-gray-100 rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 cursor-pointer w-full relative">
       <img src={image} alt={title} className="w-full h-32 object-cover rounded-md mb-2" />
       <p className="text-sm text-gray-500 mb-1">{createdAt}</p>
       <div className="flex justify-between items-center">

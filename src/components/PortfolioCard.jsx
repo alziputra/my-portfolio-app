@@ -13,8 +13,8 @@ const PortfolioCard = ({ id, image, title, createdAt, description, technologies,
   const truncateText = (text, maxLength = 100) => (text.length > maxLength ? `${text.slice(0, maxLength)}...` : text);
 
   return (
-    <div onClick={handleCardClick} className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 cursor-pointer w-full relative">
-      <img src={image} alt={title} className="w-full h-32 object-cover rounded-md mb-2" />
+    <div className="bg-gray-100 rounded-lg shadow-md hover:shadow-lg p-4 w-full relative transition-transform transform hover:scale-105">
+      <img onClick={handleCardClick} src={image} alt={title} className="w-full h-32 object-cover rounded-md mb-2 cursor-pointer" />
       <p className="text-sm text-gray-500 mb-1">{createdAt}</p>
       <div className="flex justify-between items-center mb-2">
         <h3 className="text-md font-semibold text-gray-800">{title}</h3>

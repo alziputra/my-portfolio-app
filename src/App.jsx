@@ -8,7 +8,7 @@ import PostCreator from "./components/PostCreator";
 import PortfolioList from "./pages/Portfolios/PortfolioList";
 import PortfolioDetail from "./pages/Portfolios/PortfolioDetail";
 import NotFound from "./pages/NotFound";
-import { ToastContainer } from "react-toastify"; 
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const App = () => {
   return (
