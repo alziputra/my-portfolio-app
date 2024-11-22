@@ -1,13 +1,15 @@
-import { useState } from "react";
+// src/components/BtnAction.jsx
 import PropTypes from "prop-types";
 import { FaTrashAlt, FaPaintBrush, FaEllipsisV } from "react-icons/fa";
 
-const BtnAction = ({ onEdit, onDelete }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+const BtnAction = ({ id, onEdit, onDelete, activeCard, setActiveCard }) => {
   const toggleDropdown = (e) => {
     e.stopPropagation();
-    setIsDropdownOpen((prev) => !prev);
+    setActiveCard((prev) => (prev === id ? null : id)); // Toggle dropdown hanya untuk card yang diklik
+  };
+
+  const closeDropdown = () => {
+    setActiveCard(null); // Menutup dropdown
   };
 
   return (
@@ -16,12 +18,12 @@ const BtnAction = ({ onEdit, onDelete }) => {
         <FaEllipsisV size={18} />
       </button>
 
-      {isDropdownOpen && (
+      {activeCard === id && (
         <div className="absolute top-8 right-0 bg-white shadow-md rounded-md w-32 border border-gray-300" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => {
               onEdit();
-              setIsDropdownOpen(false);
+              closeDropdown();
             }}
             className="w-full flex items-center px-4 py-2 text-blue-600 hover:bg-gray-100"
           >
@@ -31,7 +33,7 @@ const BtnAction = ({ onEdit, onDelete }) => {
           <button
             onClick={() => {
               onDelete();
-              setIsDropdownOpen(false);
+              closeDropdown();
             }}
             className="w-full flex items-center px-4 py-2 text-red-600 hover:bg-gray-100"
           >
@@ -45,8 +47,11 @@ const BtnAction = ({ onEdit, onDelete }) => {
 };
 
 BtnAction.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Bisa string atau number
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  activeCard: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  setActiveCard: PropTypes.func.isRequired,
 };
 
 export default BtnAction;

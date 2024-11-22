@@ -1,3 +1,4 @@
+//src/context/BlogContext.jsx
 import { createContext, useContext } from "react";
 
 export const BlogContext = createContext(null);

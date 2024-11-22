@@ -1,7 +1,9 @@
+// src/components/BlogCard.jsx
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import BtnAction from "./BtnAction";
-const BlogCard = ({ id, image, createdAt, title, content, onEdit, onDelete }) => {
+
+const BlogCard = ({ id, image, createdAt, title, content, onEdit, onDelete, activeCard, setActiveCard }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -12,13 +14,13 @@ const BlogCard = ({ id, image, createdAt, title, content, onEdit, onDelete }) =>
   const sliceContent = content.length > 100 ? content.slice(0, 100) + "..." : content;
 
   return (
-    <div onClick={handleCardClick} className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 cursor-pointer w-full">
+    <div onClick={handleCardClick} className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 cursor-pointer w-full relative">
       <img src={image} alt={title} className="w-full h-32 object-cover rounded-md mb-2" />
       <p className="text-sm text-gray-500 mb-1">{createdAt}</p>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <h3 className="text-md font-semibold text-gray-800 mb-2">{title}</h3>
         {/* BtnAction */}
-        <BtnAction onEdit={() => onEdit(id)} onDelete={() => onDelete(id)} />
+        <BtnAction id={id} onEdit={() => onEdit(id)} onDelete={() => onDelete(id)} activeCard={activeCard} setActiveCard={setActiveCard} />
       </div>
       <p className="text-gray-700 text-sm">{sliceContent}</p>
     </div>
@@ -33,6 +35,8 @@ BlogCard.propTypes = {
   createdAt: PropTypes.string.isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  activeCard: PropTypes.string, // ID card yang aktif
+  setActiveCard: PropTypes.func.isRequired, // Setter untuk mengubah ID aktif
 };
 
 export default BlogCard;
