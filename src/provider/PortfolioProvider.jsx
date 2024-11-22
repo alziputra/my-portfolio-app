@@ -19,7 +19,12 @@ const PortfolioProvider = ({ children }) => {
       portfolioRef,
       (snapshot) => {
         const data = snapshot.val();
-        const portfolioArray = data ? Object.keys(data).map((key) => ({ id: key, ...data[key] })) : [];
+        const portfolioArray = data
+          ? Object.keys(data).map((key) => ({
+              id: key,
+              ...data[key],
+            }))
+          : [];
         setPortfolios(portfolioArray);
         setLoading(false);
       },
@@ -36,7 +41,7 @@ const PortfolioProvider = ({ children }) => {
   // Add a new portfolio
   const addPortfolio = async (newPortfolio, file) => {
     try {
-      let imageUrl = "";
+      let imageUrl = newPortfolio.image || "";
 
       if (file) {
         imageUrl = await cloudinaryUpload(file);
