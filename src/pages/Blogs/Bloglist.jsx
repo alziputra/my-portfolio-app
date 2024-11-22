@@ -3,8 +3,8 @@ import { useState } from "react";
 import { useBlogContext } from "../../context/BlogContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import BlogCard from "../../components/BlogCard";
-import AddBlogForm from "./AddBlogForm";
-import EditBlogForm from "./EditBlogForm";
+import AddBlogForm from "./AddBlog";
+import EditBlogForm from "./EditBlog";
 
 const Blogs = () => {
   const { blogs } = useBlogContext();

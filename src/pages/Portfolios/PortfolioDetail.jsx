@@ -1,25 +1,25 @@
-//src/pages/Blogs/BlogDetail.jsx
+//src/pages/Portfolios/PortfolioDetail.jsx
 import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-import { BlogContext } from "../../context/BlogContext";
+import { PortfolioContext } from "../../context/PortfolioContext";
 import { formatRelativeTime } from "../../utils/formatTime";
 
-const BlogDetail = () => {
+const PortfolioDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { blogs, updateBlog, loading, error } = useContext(BlogContext);
+  const { portfolios, updatePortfolio, loading, error } = useContext(PortfolioContext);
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState(null);
 
   useEffect(() => {
-    const blogContent = blogs.find((blog) => blog.id === id) || {};
-    setFormData(blogContent);
-  }, [blogs, id]);
+    const portfolioContent = portfolios.find((portfolio) => portfolio.id === id) || {};
+    setFormData(portfolioContent);
+  }, [portfolios, id]);
 
   if (loading) return <div className="container mx-auto p-8">Loading...</div>;
   if (error) return <div className="container mx-auto p-8">Error: {error}</div>;
-  if (!formData) return <div className="container mx-auto p-8">Blog not found.</div>;
+  if (!formData) return <div className="container mx-auto p-8">Portfolio not found.</div>;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +28,7 @@ const BlogDetail = () => {
 
   const handleUpdate = (e) => {
     e.preventDefault();
-    updateBlog(id, formData);
+    updatePortfolio(id, formData);
     setIsEditing(false);
   };
 
@@ -42,8 +42,8 @@ const BlogDetail = () => {
               <input type="text" name="title" value={formData?.title || ""} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-lg" />
             </div>
             <div className="mb-4">
-              <label className="block font-medium mb-2">Content</label>
-              <textarea name="content" value={formData?.content || ""} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-lg" rows="6" />
+              <label className="block font-medium mb-2">Description</label>
+              <textarea name="description" value={formData?.description || ""} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-lg" rows="6" />
             </div>
             <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
               Save Changes
@@ -63,20 +63,20 @@ const BlogDetail = () => {
               </div>
             </div>
             <img src={formData?.image} alt={formData?.title} className="w-full h-64 object-cover rounded-lg mb-6" />
-            <div className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: formData?.content }}></div>
+            <div className="text-gray-800 leading-relaxed">{formData?.description}</div>
             <button onClick={() => setIsEditing(true)} className="mt-4 px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
-              Edit Blog
+              Edit Portfolio
             </button>
           </>
         )}
       </div>
       <div className="bg-gray-100 p-6 rounded-lg shadow-md">
-        <h3 className="text-lg font-semibold mb-4">Other Blog Posts</h3>
+        <h3 className="text-lg font-semibold mb-4">Other Portfolios</h3>
         <ul className="space-y-2">
-          {blogs.map((blog) => (
-            <li key={blog.id} className={`cursor-pointer ${blog.id === id ? "text-blue-500 font-semibold" : "text-gray-700"}`}>
-              <button onClick={() => navigate(`/blogs/${blog.id}`)} className="w-full text-left hover:text-blue-600">
-                {blog.title}
+          {portfolios.map((portfolio) => (
+            <li key={portfolio.id} className={`cursor-pointer ${portfolio.id === id ? "text-blue-500 font-semibold" : "text-gray-700"}`}>
+              <button onClick={() => navigate(`/portfolios/${portfolio.id}`)} className="w-full text-left hover:text-blue-600">
+                {portfolio.title}
               </button>
             </li>
           ))}
@@ -86,4 +86,4 @@ const BlogDetail = () => {
   );
 };
 
-export default BlogDetail;
+export default PortfolioDetail;

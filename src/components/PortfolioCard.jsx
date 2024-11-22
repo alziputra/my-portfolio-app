@@ -1,6 +1,18 @@
 import PropTypes from "prop-types";
+import BtnAction from "./BtnAction";
 
-const PortfolioCard = ({ image, title, createdAt, description, technologies, demoLink, githubLink }) => {
+const PortfolioCard = ({
+  id,
+  image,
+  title,
+  createdAt,
+  description,
+  technologies,
+  demoLink,
+  githubLink,
+  onEdit, // Fungsi edit yang harus diberikan oleh komponen induk
+  onDelete,
+}) => {
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 transition-all transform hover:scale-105 hover:shadow-2xl max-w-md">
       <img src={image} alt={title} className="w-full h-56 object-cover rounded-t-md mb-4" />
@@ -16,7 +28,7 @@ const PortfolioCard = ({ image, title, createdAt, description, technologies, dem
           </span>
         ))}
       </div>
-      <div className="flex justify-between mt-4">
+      <div className="flex justify-between items-center mt-4">
         <a
           href={demoLink}
           target="_blank"
@@ -35,12 +47,15 @@ const PortfolioCard = ({ image, title, createdAt, description, technologies, dem
         >
           GitHub
         </a>
+        {/* Panggil BtnAction dan pastikan onEdit disediakan */}
+        <BtnAction id={id} onEdit={onEdit} onDelete={onDelete} />
       </div>
     </div>
   );
 };
 
 PortfolioCard.propTypes = {
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   image: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
@@ -48,6 +63,8 @@ PortfolioCard.propTypes = {
   technologies: PropTypes.arrayOf(PropTypes.string).isRequired,
   demoLink: PropTypes.string.isRequired,
   githubLink: PropTypes.string.isRequired,
+  onEdit: PropTypes.func.isRequired, // Pastikan onEdit ada
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default PortfolioCard;
