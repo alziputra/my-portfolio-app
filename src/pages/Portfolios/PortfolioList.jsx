@@ -40,13 +40,14 @@ const PortfolioList = () => {
           {portfolios.map((portfolio) => (
             <PortfolioCard
               key={portfolio.id}
+              id={portfolio.id}
               image={portfolio.image}
               title={portfolio.title}
               description={portfolio.description}
               technologies={portfolio.technologies}
               demoLink={portfolio.demoLink}
               githubLink={portfolio.githubLink}
-              createdAt={portfolio.createdAt}
+              createdAt={new Date(portfolio.createdAt).toLocaleDateString()}
               onEdit={() => handleEditPortfolio(portfolio)}
               onDelete={(id) => console.log(`Portfolio with ID ${id} deleted`)}
             />
