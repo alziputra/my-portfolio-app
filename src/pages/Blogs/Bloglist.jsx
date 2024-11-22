@@ -11,9 +11,6 @@ const BlogsList = () => {
   const [formMode, setFormMode] = useState("add"); // "add" or "edit"
   const [editingBlog, setEditingBlog] = useState(null);
 
-  // Tambahan state untuk menentukan card mana yang sedang aktif
-  const [activeCard, setActiveCard] = useState(null);
-
   const handleAddBlog = () => {
     setFormMode("add");
     setEditingBlog(null);
@@ -50,8 +47,6 @@ const BlogsList = () => {
               createdAt={new Date(blog.createdAt).toLocaleDateString()}
               onEdit={() => handleEditBlog(blog)}
               onDelete={(id) => console.log(`Blog with ID ${id} deleted`)}
-              activeCard={activeCard}
-              setActiveCard={setActiveCard}
             />
           ))}
         </div>
