@@ -15,7 +15,7 @@ const Sidebar = () => {
 
   const menuItems = [
     { name: "About Me", path: "/aboutme", icon: <FaUser /> },
-    { name: "Portfolio", path: "/portfolio", icon: <FaFolderOpen /> },
+    { name: "Portfolio", path: "/portfolios", icon: <FaFolderOpen /> },
     { name: "Blogs", path: "/blogs", icon: <FaBlog /> },
     { name: "Contact", path: "/contact", icon: <FaEnvelope /> },
   ];

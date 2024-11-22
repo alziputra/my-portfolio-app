@@ -1,17 +1,16 @@
-// src/components/BlogCard.jsx
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import BtnAction from "./BtnAction";
+import { FaTrash } from "react-icons/fa";
 
-const BlogCard = ({ id, image, createdAt, title, content, onEdit, onDelete, activeCard, setActiveCard }) => {
+const BlogCard = ({ id, image, createdAt, title, content, onDelete }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
     navigate(`/blogs/${id}`);
   };
 
-  // Batasi teks content menjadi 100 karakter
-  const sliceContent = content.length > 100 ? content.slice(0, 100) + "..." : content;
+  // Fungsi untuk memotong teks content menjadi 100 karakter
+  const truncateText = (text, maxLength = 100) => (text.length > maxLength ? `${text.slice(0, maxLength)}...` : text);
 
   return (
     <div onClick={handleCardClick} className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105 cursor-pointer w-full relative">
@@ -19,10 +18,17 @@ const BlogCard = ({ id, image, createdAt, title, content, onEdit, onDelete, acti
       <p className="text-sm text-gray-500 mb-1">{createdAt}</p>
       <div className="flex justify-between items-center">
         <h3 className="text-md font-semibold text-gray-800 mb-2">{title}</h3>
-        {/* BtnAction */}
-        <BtnAction id={id} onEdit={() => onEdit(id)} onDelete={() => onDelete(id)} activeCard={activeCard} setActiveCard={setActiveCard} />
+        <button
+          onClick={(e) => {
+            e.stopPropagation(); // Prevent triggering card click when delete is clicked
+            onDelete(id); // Trigger the onDelete function with blog ID
+          }}
+          className="text-red-500 hover:text-red-700"
+        >
+          <FaTrash size={16} />
+        </button>
       </div>
-      <p className="text-gray-700 text-sm">{sliceContent}</p>
+      <p className="text-gray-700 text-sm">{truncateText(content)}</p>
     </div>
   );
 };
@@ -33,10 +39,7 @@ BlogCard.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  activeCard: PropTypes.string, // ID card yang aktif
-  setActiveCard: PropTypes.func.isRequired, // Setter untuk mengubah ID aktif
 };
 
 export default BlogCard;

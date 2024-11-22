@@ -1,56 +1,45 @@
-// src/pages/Blogs/Blogs.jsx
+// src/pages/Blogs/Bloglist.jsx
 import { useState } from "react";
 import { useBlogContext } from "../../context/BlogContext";
 import { AiOutlinePlus } from "react-icons/ai";
 import BlogCard from "../../components/BlogCard";
-import AddBlogForm from "./AddBlog";
-import EditBlogForm from "./EditBlog";
+import BlogForm from "./BlogForm";
 
-const Blogs = () => {
+const BlogsList = () => {
   const { blogs } = useBlogContext();
-
-  // State untuk mengontrol form Add/Edit
-  const [isAdding, setIsAdding] = useState(false);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [formMode, setFormMode] = useState("add"); // "add" or "edit"
   const [editingBlog, setEditingBlog] = useState(null);
 
-  // State untuk mengelola dropdown aktif pada BlogCard
+  // Tambahan state untuk menentukan card mana yang sedang aktif
   const [activeCard, setActiveCard] = useState(null);
 
-  // Fungsi untuk mengedit blog
+  const handleAddBlog = () => {
+    setFormMode("add");
+    setEditingBlog(null);
+    setIsFormOpen(true);
+  };
+
   const handleEditBlog = (blog) => {
+    setFormMode("edit");
     setEditingBlog(blog);
-    setIsAdding(false); // Sembunyikan form Add jika sedang edit
+    setIsFormOpen(true);
   };
 
   return (
     <div className="container mx-auto p-8">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">All Blogs</h1>
-        <button
-          className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-          onClick={() => {
-            setIsAdding((prev) => !prev);
-            setEditingBlog(null); // Reset editing state jika sedang menambah
-          }}
-        >
+        <button className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700" onClick={handleAddBlog}>
           <AiOutlinePlus size={20} />
-          <span>{isAdding ? "Close Form" : "Add Blog"}</span>
+          <span>Add Blog</span>
         </button>
       </div>
 
-      {/* Form Add Blog */}
-      {isAdding && <AddBlogForm onClose={() => setIsAdding(false)} />}
+      {isFormOpen && <BlogForm onClose={() => setIsFormOpen(false)} mode={formMode} initialData={editingBlog} />}
 
-      {/* Form Edit Blog */}
-      {editingBlog && <EditBlogForm blog={editingBlog} onClose={() => setEditingBlog(null)} />}
-
-      {/* Daftar Blog */}
-      {!isAdding && !editingBlog && (
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6"
-          onClick={() => setActiveCard(null)} // Menutup dropdown jika area kosong diklik
-        >
+      {!isFormOpen && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {blogs.map((blog) => (
             <BlogCard
               key={blog.id}
@@ -71,4 +60,4 @@ const Blogs = () => {
   );
 };
 
-export default Blogs;
+export default BlogsList;

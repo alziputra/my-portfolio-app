@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import BtnAction from "./BtnAction";
 
 const PortfolioCard = ({
   id,
@@ -47,8 +46,6 @@ const PortfolioCard = ({
         >
           GitHub
         </a>
-        {/* Panggil BtnAction dan pastikan onEdit disediakan */}
-        <BtnAction id={id} onEdit={onEdit} onDelete={onDelete} />
       </div>
     </div>
   );
