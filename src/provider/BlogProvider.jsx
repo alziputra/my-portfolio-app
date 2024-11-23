@@ -85,14 +85,36 @@ const BlogProvider = ({ children }) => {
 
   // Delete a blog
   const deleteBlog = async (id) => {
-    try {
-      const blogRef = ref(database, `blogs/${id}`);
-      await remove(blogRef);
-      toast.success("Blog deleted successfully!");
-    } catch (firebaseError) {
-      setError(firebaseError.message);
-      toast.error("Error deleting blog: " + firebaseError.message);
-    }
+    toast(
+      ({ closeToast }) => (
+        <div>
+          <p>Are you sure you want to delete this blog?</p>
+          <div className="flex justify-end space-x-2 mt-2">
+            <button
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+              onClick={async () => {
+                try {
+                  const blogRef = ref(database, `blogs/${id}`);
+                  await remove(blogRef);
+                  toast.success("Blog deleted successfully!");
+                } catch (firebaseError) {
+                  setError(firebaseError.message);
+                  toast.error("Error deleting blog: " + firebaseError.message);
+                } finally {
+                  closeToast();
+                }
+              }}
+            >
+              Yes
+            </button>
+            <button className="px-4 py-2 bg-gray-300 text-black rounded-lg hover:bg-gray-400" onClick={closeToast}>
+              No
+            </button>
+          </div>
+        </div>
+      ),
+      { autoClose: false }
+    );
   };
 
   return (

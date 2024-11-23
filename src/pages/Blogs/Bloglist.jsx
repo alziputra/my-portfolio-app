@@ -6,7 +6,7 @@ import BlogCard from "../../components/BlogCard";
 import BlogForm from "./BlogForm";
 
 const BlogsList = () => {
-  const { blogs } = useBlogContext();
+  const { blogs, deleteBlog } = useBlogContext(); // Include deleteBlog from context
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [formMode, setFormMode] = useState("add"); // "add" or "edit"
   const [editingBlog, setEditingBlog] = useState(null);
@@ -46,7 +46,7 @@ const BlogsList = () => {
               content={blog.content}
               createdAt={new Date(blog.createdAt).toLocaleDateString()}
               onEdit={() => handleEditBlog(blog)}
-              onDelete={(id) => console.log(`Blog with ID ${id} deleted`)}
+              onDelete={() => deleteBlog(blog.id)} // Directly call deleteBlog from context
             />
           ))}
         </div>

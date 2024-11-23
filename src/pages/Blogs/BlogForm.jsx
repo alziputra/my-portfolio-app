@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import { useBlogContext } from "../../context/BlogContext";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
 
 const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
   const { addBlog, updateBlog } = useBlogContext();
@@ -11,6 +10,7 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null); // File gambar
   const [isUploading, setIsUploading] = useState(false);
+  const [errors, setErrors] = useState({}); // Untuk menyimpan pesan error
 
   useEffect(() => {
     if (mode === "edit" && initialData) {
@@ -20,13 +20,19 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
     }
   }, [mode, initialData]);
 
+  const validateForm = () => {
+    const newErrors = {};
+    if (!title) newErrors.title = "Title is required.";
+    if (!content) newErrors.content = "Content is required.";
+    if (mode === "add" && !image) newErrors.image = "Image is required for new blogs.";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Form valid jika tidak ada error
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !content || (!image && mode === "add")) {
-      toast.error("Please fill out all fields!");
-      return;
-    }
+    if (!validateForm()) return;
 
     const newBlog = {
       title,
@@ -38,16 +44,13 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
 
       if (mode === "add") {
         await addBlog(newBlog, image);
-        toast.success("Blog added successfully!");
       } else {
         await updateBlog(initialData.id, newBlog, image);
-        toast.success("Blog updated successfully!");
       }
 
-      onClose();
+      onClose(); // Tutup form setelah berhasil
     } catch (error) {
-      console.error(error);
-      toast.error("An error occurred while saving the blog.");
+      console.error("An error occurred while saving the blog.", error);
     } finally {
       setIsUploading(false);
     }
@@ -57,15 +60,18 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
     <form onSubmit={handleSubmit} className="mb-8 space-y-4 p-4 border border-gray-300 rounded-lg shadow-md">
       <div>
         <label className="block text-gray-700 font-medium mb-2">Title</label>
-        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg" placeholder="Enter blog title" />
+        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className={`w-full p-2 border ${errors.title ? "border-red-500" : "border-gray-300"} rounded-lg`} placeholder="Enter blog title" />
+        {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
       </div>
       <div>
         <label className="block text-gray-700 font-medium mb-2">Content</label>
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} className="w-full p-2 border border-gray-300 rounded-lg" rows="4" placeholder="Enter blog content"></textarea>
+        <textarea value={content} onChange={(e) => setContent(e.target.value)} className={`w-full p-2 border ${errors.content ? "border-red-500" : "border-gray-300"} rounded-lg`} rows="4" placeholder="Enter blog content"></textarea>
+        {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
       </div>
       <div>
         <label className="block text-gray-700 font-medium mb-2">Image</label>
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} className="w-full p-2 border border-gray-300 rounded-lg" />
+        <input type="file" onChange={(e) => setImage(e.target.files[0])} className={`w-full p-2 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-lg`} />
+        {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
         {image && typeof image === "string" && (
           <div className="mt-2">
             <img src={image} alt="Current project" className="w-full h-32 object-cover rounded-lg" />
