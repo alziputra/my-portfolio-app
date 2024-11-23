@@ -1,70 +1,48 @@
 //src/pages/Blogs/BlogDetail.jsx
+// src/pages/Blogs/BlogDetail.jsx
 import { useParams, useNavigate } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
 import { BlogContext } from "../../context/BlogContext";
 import { formatRelativeTime } from "../../utils/formatTime";
+import BlogForm from "./BlogForm";
 
 const BlogDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { blogs, updateBlog, loading, error } = useContext(BlogContext);
+  const { blogs, loading, error } = useContext(BlogContext);
 
   const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState(null);
+  const [blogData, setBlogData] = useState(null);
 
   useEffect(() => {
-    const blogContent = blogs.find((blog) => blog.id === id) || {};
-    setFormData(blogContent);
+    const blogContent = blogs.find((blog) => blog.id === id) || null;
+    setBlogData(blogContent);
   }, [blogs, id]);
 
   if (loading) return <div className="container mx-auto p-8">Loading...</div>;
   if (error) return <div className="container mx-auto p-8">Error: {error}</div>;
-  if (!formData) return <div className="container mx-auto p-8">Blog not found.</div>;
+  if (!blogData) return <div className="container mx-auto p-8">Blog not found.</div>;
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    updateBlog(id, formData);
-    setIsEditing(false);
-  };
+  const handleEditToggle = () => setIsEditing((prev) => !prev);
 
   return (
     <div className="container mx-auto p-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2">
         {isEditing ? (
-          <form onSubmit={handleUpdate}>
-            <div className="mb-4">
-              <label className="block font-medium mb-2">Title</label>
-              <input type="text" name="title" value={formData?.title || ""} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-lg" />
-            </div>
-            <div className="mb-4">
-              <label className="block font-medium mb-2">Content</label>
-              <textarea name="content" value={formData?.content || ""} onChange={handleInputChange} className="w-full p-2 border border-gray-300 rounded-lg" rows="6" />
-            </div>
-            <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-              Save Changes
-            </button>
-            <button type="button" onClick={() => setIsEditing(false)} className="ml-4 px-4 py-2 bg-gray-400 text-white rounded-lg hover:bg-gray-500">
-              Cancel
-            </button>
-          </form>
+          <BlogForm mode="edit" initialData={blogData} onClose={handleEditToggle} />
         ) : (
           <>
-            <h1 className="text-3xl font-bold mb-4">{formData?.title}</h1>
+            <h1 className="text-3xl font-bold mb-4">{blogData?.title}</h1>
             <div className="flex items-center mb-6">
-              <img src={formData?.author?.profileImage} alt={formData?.author?.name} className="w-12 h-12 rounded-full mr-4" />
+              <img src={blogData?.author?.profileImage} alt={blogData?.author?.name} className="w-12 h-12 rounded-full mr-4" />
               <div>
-                <p className="text-lg font-semibold">{formData?.author?.name}</p>
-                <p className="text-gray-600">{formatRelativeTime(formData?.createdAt)}</p>
+                <p className="text-lg font-semibold">{blogData?.author?.name}</p>
+                <p className="text-gray-600">{formatRelativeTime(blogData?.createdAt)}</p>
               </div>
             </div>
-            <img src={formData?.image} alt={formData?.title} className="w-full h-64 object-cover rounded-lg mb-6" />
-            <div className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: formData?.content }}></div>
-            <button onClick={() => setIsEditing(true)} className="mt-4 px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
+            {blogData?.image && <img src={blogData?.image} alt={blogData?.title} className="w-full h-64 object-cover rounded-lg mb-6" />}
+            <div className="text-gray-800 leading-relaxed" dangerouslySetInnerHTML={{ __html: blogData?.content }}></div>
+            <button onClick={handleEditToggle} className="mt-4 px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
               Edit Blog
             </button>
           </>

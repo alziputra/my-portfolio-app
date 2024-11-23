@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 
 const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
   const { addBlog, updateBlog } = useBlogContext();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null); // File gambar
@@ -27,19 +28,26 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
       return;
     }
 
+    const newBlog = {
+      title,
+      content,
+    };
+
     try {
       setIsUploading(true);
+
       if (mode === "add") {
-        await addBlog({ title, content }, image);
+        await addBlog(newBlog, image);
         toast.success("Blog added successfully!");
       } else {
-        await updateBlog(initialData.id, { title, content, image });
+        await updateBlog(initialData.id, newBlog, image);
         toast.success("Blog updated successfully!");
       }
+
       onClose();
     } catch (error) {
-      console.error(`Error ${mode === "add" ? "adding" : "updating"} blog:`, error);
-      toast.error(`Failed to ${mode === "add" ? "add" : "update"} blog. Please try again.`);
+      console.error(error);
+      toast.error("An error occurred while saving the blog.");
     } finally {
       setIsUploading(false);
     }
@@ -58,6 +66,11 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
       <div>
         <label className="block text-gray-700 font-medium mb-2">Image</label>
         <input type="file" onChange={(e) => setImage(e.target.files[0])} className="w-full p-2 border border-gray-300 rounded-lg" />
+        {image && typeof image === "string" && (
+          <div className="mt-2">
+            <img src={image} alt="Current project" className="w-full h-32 object-cover rounded-lg" />
+          </div>
+        )}
       </div>
       <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" disabled={isUploading}>
         {isUploading ? "Uploading..." : mode === "add" ? "Add Blog" : "Update Blog"}
