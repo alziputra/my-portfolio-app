@@ -1,9 +1,9 @@
 //src/components/BlogCard.jsx
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 
-const BlogCard = ({ id, image, createdAt, title, content, onDelete }) => {
+const BlogCard = ({ id, image, createdAt, title, content, onEdit, onDelete }) => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
@@ -19,15 +19,29 @@ const BlogCard = ({ id, image, createdAt, title, content, onDelete }) => {
       <p className="text-sm text-gray-500 mb-1">{createdAt}</p>
       <div className="flex justify-between items-center">
         <h3 className="text-md font-semibold text-gray-800 mb-2">{title}</h3>
-        <button
-          onClick={(e) => {
-            e.stopPropagation(); // Prevent triggering card click when delete is clicked
-            onDelete(id); // Trigger the onDelete function with blog ID
-          }}
-          className="text-red-500 hover:text-red-700"
-        >
-          <FaTrash size={16} />
-        </button>
+        <div className="flex space-x-2">
+          {/* Tombol Edit */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent triggering card click when edit is clicked
+              onEdit(id); // Trigger the onEdit function with portfolio ID
+            }}
+            className="text-blue-500 hover:text-blue-700"
+          >
+            <FaEdit size={16} />
+          </button>
+
+          {/* Tombol Delete */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent triggering card click when delete is clicked
+              onDelete(id); // Trigger the onDelete function with portfolio ID
+            }}
+            className="text-red-500 hover:text-red-700"
+          >
+            <FaTrash size={16} />
+          </button>
+        </div>
       </div>
       <p className="text-gray-700 text-sm">{truncateText(content)}</p>
     </div>
@@ -40,6 +54,7 @@ BlogCard.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
 };
 
