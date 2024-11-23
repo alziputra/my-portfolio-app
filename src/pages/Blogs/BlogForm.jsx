@@ -1,13 +1,14 @@
-//src/pages/Blogs/BlogForm.jsx
 import { useState, useEffect } from "react";
 import { useBlogContext } from "../../context/BlogContext";
 import PropTypes from "prop-types";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
   const { addBlog, updateBlog } = useBlogContext();
 
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState(""); // Content akan menyimpan HTML
   const [image, setImage] = useState(null); // File gambar
   const [isUploading, setIsUploading] = useState(false);
   const [errors, setErrors] = useState({}); // Untuk menyimpan pesan error
@@ -36,7 +37,7 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
 
     const newBlog = {
       title,
-      content,
+      content, // Content dalam format HTML
     };
 
     try {
@@ -65,7 +66,14 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
       </div>
       <div>
         <label className="block text-gray-700 font-medium mb-2">Content</label>
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} className={`w-full p-2 border ${errors.content ? "border-red-500" : "border-gray-300"} rounded-lg`} rows="4" placeholder="Enter blog content"></textarea>
+        <CKEditor
+          editor={ClassicEditor}
+          data={content}
+          onChange={(event, editor) => setContent(editor.getData())}
+          config={{
+            placeholder: "Enter blog content",
+          }}
+        />
         {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
       </div>
       <div>
