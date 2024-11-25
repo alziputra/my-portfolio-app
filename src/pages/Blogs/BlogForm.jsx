@@ -1,8 +1,8 @@
+//src/pages/Blogs/BlogForm.jsx
 import { useState, useEffect } from "react";
 import { useBlogContext } from "../../context/BlogContext";
 import PropTypes from "prop-types";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import Editor from "../../components/Editor";
 
 const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
   const { addBlog, updateBlog } = useBlogContext();
@@ -15,9 +15,9 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
 
   useEffect(() => {
     if (mode === "edit" && initialData) {
-      setTitle(initialData.title);
-      setContent(initialData.content);
-      setImage(initialData.image);
+      setTitle(initialData.title || "");
+      setContent(initialData.content || "");
+      setImage(initialData.image || null);
     }
   }, [mode, initialData]);
 
@@ -25,9 +25,11 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
     const newErrors = {};
     if (!title) newErrors.title = "Title is required.";
     if (!content) newErrors.content = "Content is required.";
-    if (mode === "add" && !image) newErrors.image = "Image is required for new blogs.";
+    if (mode === "add" && (!image || typeof image !== "object")) {
+      newErrors.image = "Image file is required for new blogs.";
+    }
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Form valid jika tidak ada error
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
@@ -64,21 +66,25 @@ const BlogForm = ({ onClose, mode = "add", initialData = null }) => {
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className={`w-full p-2 border ${errors.title ? "border-red-500" : "border-gray-300"} rounded-lg`} placeholder="Enter blog title" />
         {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title}</p>}
       </div>
+
+      {/* ckeditor untuk menulis konten blog */}
       <div>
-        <label className="block text-gray-700 font-medium mb-2">Content</label>
-        <CKEditor
-          editor={ClassicEditor}
-          data={content}
-          onChange={(event, editor) => setContent(editor.getData())}
-          config={{
-            placeholder: "Enter blog content",
-          }}
-        />
-        {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
+        <div>
+          <label className="block text-gray-700 font-medium mb-2">Content</label>
+          <Editor content={content} setContent={setContent} placeholder="Enter blog content" />
+          {errors.content && <p className="text-red-500 text-sm mt-1">{errors.content}</p>}
+        </div>
       </div>
       <div>
         <label className="block text-gray-700 font-medium mb-2">Image</label>
-        <input type="file" onChange={(e) => setImage(e.target.files[0])} className={`w-full p-2 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-lg`} />
+        <input
+          type="file"
+          onChange={(e) => {
+            const file = e.target.files[0];
+            setImage(file ? file : null); // Pastikan `null` jika tidak ada file
+          }}
+          className={`w-full p-2 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-lg`}
+        />
         {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image}</p>}
         {image && typeof image === "string" && (
           <div className="mt-2">

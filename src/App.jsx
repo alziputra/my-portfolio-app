@@ -1,3 +1,4 @@
+//src/App.jsx
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import MainLayout from "./layout/MainLayout";
 import AboutMe from "./pages/AboutMe";
@@ -10,12 +11,25 @@ import PortfolioDetail from "./pages/Portfolios/PortfolioDetail";
 import NotFound from "./pages/NotFound";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+const ProtectedRoute = ({ children, needAuth }) => {
+  const { user, loading } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+
+  if (needAuth && !user) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
 const App = () => {
   return (
     <Router>
       <MainLayout>
         <Routes>
-          <Route path="/" element={<Navigate to="/blogs" replace />} />
+          <Route path="/" element={<Navigate to="/aboutme" replace />} />
           {/* Define main routes */}
           <Route path="/aboutme" element={<AboutMe />} />
           <Route path="/portfolios" element={<PortfolioList />} />

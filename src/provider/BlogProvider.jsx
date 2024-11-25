@@ -20,7 +20,10 @@ const BlogProvider = ({ children }) => {
       blogRef,
       (snapshot) => {
         const data = snapshot.val();
+
+        // Pastikan data tidak null atau undefined
         const blogArray = data ? Object.keys(data).map((key) => ({ id: key, ...data[key] })) : [];
+
         setBlogs(blogArray);
         setLoading(false);
       },
@@ -62,7 +65,11 @@ const BlogProvider = ({ children }) => {
   // Update an existing blog
   const updateBlog = async (id, updatedData, file) => {
     try {
-      let imageUrl = updatedData.image || "";
+      if (!id || !updatedData) {
+        throw new Error("Blog ID or updated data is missing.");
+      }
+
+      let imageUrl = updatedData?.image && typeof updatedData.image === "string" ? updatedData.image : "";
 
       if (file) {
         imageUrl = await cloudinaryUpload(file);
@@ -71,15 +78,17 @@ const BlogProvider = ({ children }) => {
       const blogRef = ref(database, `blogs/${id}`);
       const blogData = {
         ...updatedData,
+        content: updatedData.content || "",
         image: imageUrl,
         updatedAt: new Date().toISOString(),
       };
 
       await update(blogRef, blogData);
       toast.success("Blog updated successfully!");
-    } catch (firebaseError) {
-      setError(firebaseError.message);
-      toast.error("Error updating blog: " + firebaseError.message);
+    } catch (error) {
+      const errorMessage = error.message || "An unknown error occurred.";
+      setError(errorMessage);
+      toast.error("Error updating blog: " + errorMessage);
     }
   };
 

@@ -1,4 +1,3 @@
-//src/components/BlogCard.jsx
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaEdit } from "react-icons/fa";
@@ -43,7 +42,9 @@ const BlogCard = ({ id, image, createdAt, title, content, onEdit, onDelete }) =>
           </button>
         </div>
       </div>
-      <p className="text-gray-700 text-sm">{truncateText(content)}</p>
+
+      {/* Tampilkan konten dengan HTML, jika ada */}
+      <p className="text-gray-700 text-sm" dangerouslySetInnerHTML={{ __html: truncateText(content) }} />
     </div>
   );
 };
